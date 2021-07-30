@@ -29,7 +29,9 @@ setopt ignoreeof # Ctrl+D でログアウトさせない
 umask 0002
 
 # TAB補完で大文字小文字を無視
-zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}'
+autoload -Uz compinit
+compinit
+zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}' 
 
 # vi モードを有効化
 bindkey -v

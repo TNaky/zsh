@@ -14,6 +14,7 @@ export KERL_DEFAULT_INSTALL_DIR=${HOME}/.local/share/kerl
 
 # 設定ファイルが存在していない場合に作成
 if [ ! -f "${KERL_CONFIG}" ]; then
+    mkdir -p ${XDG_CONFIG_HOME}/kerl
     echo 'KERL_CONFIGURE_OPTIONS="--disable-hipe --enable-smp-support --enable-threads --enable-kernel-poll"' > ${KERL_CONFIG}
 fi
 
