@@ -8,7 +8,7 @@ if type nvim &> /dev/null; then
     alias vim='nvim'
 fi
 
-alias ls='ls --color=auto'
+alias ls='ls --color=auto --group-directories-first'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
