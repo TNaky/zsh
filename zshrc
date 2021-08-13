@@ -112,6 +112,14 @@ if [ -d ${XDG_CONFIG_HOME}/zsh/mods ]; then
     done
 fi
 
+# Starship の読み込み
+if type starship &> /dev/null; then
+    eval "$(starship init zsh)"
+else
+    BIN_DIR=${HOME}/.local/bin FORCE=enable sh -c "$(curl -fsSL https://starship.rs/install.sh)"
+    eval "$(starship init zsh)"
+fi
+
 # tmux を自動起動
 if type tmux > /dev/null && [ "${TERM_PROGRAM}" != "vscode" ] && [ -z "${TMUX}" ]; then
     print -P "%F{33}▓▒░ %F{220}enter tmux new session [y/N]%f"
