@@ -112,6 +112,8 @@ if [ -d ${XDG_CONFIG_HOME}/zsh/mods ]; then
     done
 fi
 
+# Starship が参照する設定のパスを変更
+export STARSHIP_CONFIG=${HOME}/.config/zsh/starship.toml
 # Starship の読み込み
 if type starship &> /dev/null; then
     eval "$(starship init zsh)"
