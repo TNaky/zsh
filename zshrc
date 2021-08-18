@@ -82,6 +82,10 @@ if [ -f ${XDG_CONFIG_HOME}/zsh/zinit/bin/zinit.zsh ]; then
     # fzf
     zinit ice from"gh-r" as"program"
     zinit load junegunn/fzf-bin
+
+    # zsh-users で公開されている入力補完
+    zinit ice blockf
+    zinit light zsh-users/zsh-completions
 fi
 
 # ${HOME}/.local/bin を PATH に追加
