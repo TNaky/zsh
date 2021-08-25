@@ -29,8 +29,6 @@ setopt ignoreeof # Ctrl+D でログアウトさせない
 umask 0002
 
 # TAB補完で大文字小文字を無視
-autoload -Uz compinit
-compinit
 zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}' 
 
 # vi モードを有効化
@@ -41,10 +39,6 @@ export XDG_CONFIG_HOME=${HOME}/.config
 
 # プロンプトの配色
 autoload -Uz colors
-
-# プロンプトを設定
-
-PROMPT="[%c] %% "
 
 # nvim インストール済みならデフォルトのエディタを指定
 if type nvim > /dev/null; then
@@ -123,8 +117,17 @@ if type starship &> /dev/null; then
     eval "$(starship init zsh)"
 else
     BIN_DIR=${HOME}/.local/bin FORCE=enable sh -c "$(curl -fsSL https://starship.rs/install.sh)"
-    eval "$(starship init zsh)"
+    if type starship &> /dev/null; then
+        eval "$(starship init zsh)"
+    else
+        # Starship が 取得できない場合のプロンプトを設定
+        PROMPT="[%c] %% "
+    fi
 fi
+
+# 入力補完の処理を読み込み
+autoload -Uz compinit
+compinit
 
 # tmux を自動起動
 if type tmux > /dev/null && [ "${TERM_PROGRAM}" != "vscode" ] && [ -z "${TMUX}" ]; then
