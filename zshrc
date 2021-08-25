@@ -56,7 +56,14 @@ fi
 
 # zinit がインストール済み前提の処理
 if [ -f ${XDG_CONFIG_HOME}/zsh/zinit/bin/zinit.zsh ]; then
+    # zinit がプラグインをインストールする先のディレクトリを変更
+    declare -A ZINIT
+    ZINIT[HOME_DIR]=${XDG_CONFIG_HOME}/zsh/zinit
+
+    # zinit を有効化
     source ${XDG_CONFIG_HOME}/zsh/zinit/bin/zinit.zsh
+
+    # zinit の入力補完を有効化
     autoload -Uz _zinit
     (( ${+_comps} )) && _comps[zinit]=_zinit
 
