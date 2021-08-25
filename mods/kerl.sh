@@ -32,7 +32,7 @@ kerlon()
 }
 
 # erlangがインストール済みの時に標準で有効化するerlangを指定
-ERL_DEFAULT_VERSION="24.0.3"
+ERL_DEFAULT_VERSION="24.0"
 if [ -d ${KERL_DEFAULT_INSTALL_DIR} ]; then
     for erl_path in $(find ${KERL_DEFAULT_INSTALL_DIR} -maxdepth 1 -mindepth 1 -type d -name "*"); do
         if expr ${erl_path} : "^.*/${ERL_DEFAULT_VERSION}$" &> /dev/null; then
