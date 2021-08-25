@@ -70,8 +70,6 @@ if [ -f ${XDG_CONFIG_HOME}/zsh/zinit/bin/zinit.zsh ]; then
     bindkey "^N" autosuggest-accept
     # シンタックスハイライト
     zinit load zdharma/fast-syntax-highlighting
-    # サブコマンド用の補完
-    zinit load zsh-users/zsh-completions
 
     # fzf
     zinit ice from"gh-r" as"program"
