@@ -108,6 +108,14 @@ if type direnv > /dev/null; then
     eval "$(direnv hook zsh)"
 fi
 
+# 自作の補完をパスに追加
+# 補完自体の読み込みは個別に実施
+# ディレクトリ構成
+#   zsh/completions         自作の補完を配置
+#   zsh/completions/aliases 個別に取得した補完のエイリアスを配置
+test -d ${XDG_CONFIG_HOME}/zsh/completions/aliases || mkdir -p ${XDG_CONFIG_HOME}/zsh/completions/aliases
+fpath=(${XDG_CONFIG_HOME}/zsh/completions ${XDG_CONFIG_HOME}/zsh/completions/aliases "${fpath[@]}")
+
 # 自作の関数やエイリアスを読み込み
 if [ -d ${XDG_CONFIG_HOME}/zsh/mods ]; then
     for mod in $(find ${XDG_CONFIG_HOME}/zsh/mods); do
