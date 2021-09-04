@@ -1,8 +1,8 @@
 #!/usr/bin/zsh
 
-readonly local rebar3_bin=${HOME}/.local/bin/rebar3
-readonly local rebar3_dir=${HOME}/.local/share/rebar3
-readonly local completion=${rebar3_dir}/priv/shell-completion/zsh/_rebar3
+local rebar3_bin=${HOME}/.local/bin/rebar3
+local rebar3_dir=${HOME}/.local/share/rebar3
+local completion=${rebar3_dir}/priv/shell-completion/zsh/_rebar3
 
 if ! type rebar3 &> /dev/null; then
     curl -sSL https://s3.amazonaws.com/rebar3/rebar3 -o ${rebar3_bin}
@@ -17,3 +17,4 @@ fi
 
 autoload -Uz _rebar3
 
+unset rebar3_bin rebar3_dir completion
