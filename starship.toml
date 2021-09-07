@@ -1,3 +1,5 @@
+scan_timeout = 1000
+
 [aws]
 symbol = "  "
 # format = '\[[$symbol($profile)(\($region\))(\[$duration\])]($style)\]'
