@@ -33,3 +33,7 @@ fi
 if type tig &> /dev/null ; then
     alias tig='tig status'
 fi
+
+if type rebar3 &> /dev/null; then
+    alias rebar='rebar3'
+fi
