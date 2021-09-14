@@ -1,4 +1,4 @@
-scan_timeout = 1000
+scan_timeout = 2000
 
 [aws]
 symbol = "  "
