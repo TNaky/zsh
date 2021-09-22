@@ -108,21 +108,6 @@ if type direnv > /dev/null; then
     eval "$(direnv hook zsh)"
 fi
 
-# 自作の補完をパスに追加
-# 補完自体の読み込みは個別に実施
-# ディレクトリ構成
-#   zsh/completions         自作の補完を配置
-#   zsh/completions/aliases 個別に取得した補完のエイリアスを配置
-test -d ${XDG_CONFIG_HOME}/zsh/completions/aliases || mkdir -p ${XDG_CONFIG_HOME}/zsh/completions/aliases
-fpath=(${XDG_CONFIG_HOME}/zsh/completions ${XDG_CONFIG_HOME}/zsh/completions/aliases "${fpath[@]}")
-
-# 自作の関数やエイリアスを読み込み
-if [ -d ${XDG_CONFIG_HOME}/zsh/mods ]; then
-    for mod in $(find ${XDG_CONFIG_HOME}/zsh/mods); do
-        . $mod
-    done
-fi
-
 # Starship が参照する設定のパスを変更
 export STARSHIP_CONFIG=${HOME}/.config/zsh/starship.toml
 # Starship の読み込み
@@ -136,6 +121,21 @@ else
         # Starship が 取得できない場合のプロンプトを設定
         PROMPT="[%c] %% "
     fi
+fi
+
+# 自作の補完をパスに追加
+# 補完自体の読み込みは個別に実施
+# ディレクトリ構成
+#   zsh/completions         自作の補完を配置
+#   zsh/completions/aliases 個別に取得した補完のエイリアスを配置
+test -d ${XDG_CONFIG_HOME}/zsh/completions/aliases || mkdir -p ${XDG_CONFIG_HOME}/zsh/completions/aliases
+fpath=(${XDG_CONFIG_HOME}/zsh/completions ${XDG_CONFIG_HOME}/zsh/completions/aliases "${fpath[@]}")
+
+# 自作の関数やエイリアスを読み込み
+if [ -d ${XDG_CONFIG_HOME}/zsh/mods ]; then
+    for mod in $(find ${XDG_CONFIG_HOME}/zsh/mods); do
+        . $mod
+    done
 fi
 
 # 入力補完の処理を読み込み
