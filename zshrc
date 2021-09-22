@@ -144,25 +144,42 @@ compinit
 
 # tmux を自動起動
 if type tmux > /dev/null && [ "${TERM_PROGRAM}" != "vscode" ] && [ -z "${TMUX}" ]; then
-    print -P "%F{33}▓▒░ %F{220}enter tmux new session [y/N]%f"
-    if read -q; then
-        command clear
-        if [ $(tmux ls | wc -l) -eq 0 ]; then
-            exec tmux
-        elif type fzf > /dev/null; then
-            name=$(tmux ls | fzf | awk '{print $1}' | tr -d ':')
-            if [ -z "${name}" ]; then
+    # 途中でkillされたときにtmuxを起動せずに抜けられるように設定
+    trap 'trap - 2 && command clear && return' 2
+    # 入力を確認
+    print -P "%F{33}▓▒░ %F{220}enter tmux new session [Y/n]%f"
+    # 一文字だけ入力を受付
+    # https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html#Shell-Builtin-Commands
+    read -k Yn
+    # 入力値がNまたはnだった場合にtmuxを起動せず、それ以外ならtmuxの起動に入る
+    case "${Yn}" in
+        [Nn])
+            # 画面の掃除
+            command clear
+            ;;
+        *)
+            # tmuxの起動前にkillのhookを外す
+            trap - 2
+            command clear
+            if [ $(tmux ls | wc -l) -eq 0 ]; then
+                # tmuxのセッションがなければ勝手に起動
                 exec tmux
+            elif type fzf > /dev/null; then
+                # fzfがインストール済みなら、アタッチするtmuxのセッションを選択
+                name=$(tmux ls | fzf | awk '{print $1}' | tr -d ':')
+                if [ -z "${name}" ]; then
+                    # アタッチ先が選択されなければ（Ctrl+C）なら新しいセッションでtmuxを起動
+                    exec tmux
+                else
+                    # 選択したセッションにアタッチ
+                    exec tmux a -t ${name}
+                fi
             else
-                exec tmux a -t ${name}
+                # fzfがインストールされていなければtmuxのセッション一覧を表示のみ行う
+                print -P "%F{33}▓▒░ %F{220}tmux session list%f"
+                tmux ls
+                print -P "%F{33}▓▒░ %f"
             fi
-        else
-            print -P "%F{33}▓▒░ %F{220}tmux session list%f"
-            tmux ls
-            print -P "%F{33}▓▒░ %f"
-        fi
-    else
-        command clear
-    fi
+    esac
 fi
 
