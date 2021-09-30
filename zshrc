@@ -117,6 +117,10 @@ else
     fi
 fi
 
+# 設定済みの入力補完の処理を読み込み
+autoload -Uz compinit
+compinit
+
 # 自作の補完をパスに追加
 # 補完自体の読み込みは個別に実施
 # ディレクトリ構成
@@ -132,7 +136,7 @@ if [ -d ${XDG_CONFIG_HOME}/zsh/mods ]; then
     done
 fi
 
-# 入力補完の処理を読み込み
+# 追加で設定された入力補完の処理を読み込み
 autoload -Uz compinit
 compinit
 
