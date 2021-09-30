@@ -15,8 +15,8 @@ if [ ! -f ${k8s_dir}/kubectl_${k8s_ver} ]; then
     ln -sf ${k8s_dir}/kubectl_${k8s_ver} ${k8s_bin}
 fi
 
-source <(kubectl completion zsh)
-autoload -Uz compinit
+eval "`kubectl completion zsh`"
+autoload -Uz _kubectl
 
 unset k8s_dir k8s_bin k8s_ver
 
