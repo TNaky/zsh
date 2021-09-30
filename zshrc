@@ -88,20 +88,14 @@ if [ -f ${XDG_CONFIG_HOME}/zsh/zinit/bin/zinit.zsh ]; then
 fi
 
 # ${HOME}/.local/bin を PATH に追加
-__LOCAL_BIN=${HOME}/.local/bin
-if [ -d ${__LOCAL_BIN} ]; then
-    export PATH=${PATH}:${__LOCAL_BIN}
+local local_bin=${HOME}/.local/bin
+if [ -d ${local_bin} ]; then
+    export PATH=${PATH}:${local_bin}
 fi
+unset local_bin
 
 # Rootless Docker のソケットを設定
 export DOCKER_HOST=unix:///run/user/1000/docker.sock
-
-# Python の仮想環境を設定
-if [ -f ${__LOCAL_BIN}/virtualenvwrapper.sh ]; then
-    export WORKON_HOME=${HOME}/.local/share/virtualenvs
-    export VIRTUALENVWRAPPER_PYTHON=$(which python3)
-    source ${__LOCAL_BIN}/virtualenvwrapper.sh
-fi
 
 # direnv の hook を追加
 if type direnv > /dev/null; then
@@ -131,7 +125,7 @@ fi
 test -d ${XDG_CONFIG_HOME}/zsh/completions/aliases || mkdir -p ${XDG_CONFIG_HOME}/zsh/completions/aliases
 fpath=(${XDG_CONFIG_HOME}/zsh/completions ${XDG_CONFIG_HOME}/zsh/completions/aliases "${fpath[@]}")
 
-# 自作の関数やエイリアスを読み込み
+# zsh以外に依存する設定やエイリアス、関数の読み込み
 if [ -d ${XDG_CONFIG_HOME}/zsh/mods ]; then
     for mod in $(find ${XDG_CONFIG_HOME}/zsh/mods); do
         . $mod
