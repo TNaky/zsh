@@ -9,6 +9,11 @@ test -f ${RSVM_DIR}/current/dist/share/zsh/site-functions/_cargo -a ! -f ${XDG_C
     ln -s ${RSVM_DIR}/current/dist/share/zsh/site-functions/_cargo ${XDG_CONFIG_HOME}/zsh/completions/aliases/_cargo
 autoload -Uz _cargo
 
+test -f ${XDG_CONFIG_HOME}/zsh/completions/aliases/_rustup || \
+    rustup completions zsh > ${XDG_CONFIG_HOME}/zsh/completions/aliases/_cargo
+
+autoload -Uz _rustup
+
 rsvmon()
 {
     if [ -d ${RSVM_DIR}/versions ]; then
@@ -17,5 +22,9 @@ rsvmon()
         test -f ${RSVM_DIR}/current/dist/share/zsh/site-functions/_cargo && \
             ln -sf ${RSVM_DIR}/current/dist/share/zsh/site-functions/_cargo ${XDG_CONFIG_HOME}/zsh/completions/aliases/_cargo
         autoload -Uz _cargo
+
+        rustup completions zsh > ${XDG_CONFIG_HOME}/zsh/completions/aliases/_cargo
+        autoload -Uz _rustup
     fi
 }
+
